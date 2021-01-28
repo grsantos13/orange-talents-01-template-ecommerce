@@ -1,5 +1,7 @@
 package br.com.zup.ecommerce.user;
 
+import br.com.zup.ecommerce.shared.validation.annotation.Unique;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -7,7 +9,8 @@ import javax.validation.constraints.Size;
 public class NewUserRequest {
 
 	@NotBlank(message = "{user.login.blank}")
-	@Email(message = "{user.login.emailformat}")
+	@Email(message = "{user.login.emailFormat}")
+	@Unique(field = "login", domainClass = User.class, message = "{user.login.doubled}")
 	private String login;
 	
 	@NotBlank(message = "{user.password.blank}")
@@ -27,7 +30,7 @@ public class NewUserRequest {
 	}
 
 	public User toModel() {
-		return new User(this.login, this.password);
+		return new User(this.login, new CleanPassword(this.password));
 	}
 	
 
