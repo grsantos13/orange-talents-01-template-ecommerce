@@ -1,15 +1,15 @@
 package br.com.zup.ecommerce.category;
 
-import javax.persistence.EntityManager;
-import javax.validation.constraints.NotBlank;
-
 import br.com.zup.ecommerce.shared.validation.annotation.ExistsResource;
 import br.com.zup.ecommerce.shared.validation.annotation.Unique;
 import org.springframework.util.Assert;
 
+import javax.persistence.EntityManager;
+import javax.validation.constraints.NotBlank;
+
 public class NewCategoryRequest {
 	
-	@NotBlank(message = "{category.name.blank}")
+	@NotBlank
 	@Unique(field = "name", domainClass = Category.class)
 	private String name;
 

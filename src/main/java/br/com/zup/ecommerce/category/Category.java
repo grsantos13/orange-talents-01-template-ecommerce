@@ -20,7 +20,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "{category.name.blank}")
+    @NotBlank
     @Column(nullable = false)
     private String name;
 

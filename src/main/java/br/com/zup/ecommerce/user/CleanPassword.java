@@ -14,13 +14,13 @@ import org.springframework.util.Assert;
  */
 public class CleanPassword {
 	
-	@NotBlank(message = "{user.password.blank}")
-	@Size(min = 6, message = "{user.password.size}")
+	@NotBlank
+	@Size(min = 6)
 	private String password;
 
 	public CleanPassword( @NotBlank @Size(min = 6) String password) {
 		Assert.hasLength(password, "Password must not be blank");
-		Assert.isTrue(password.length() >= 6, "Passwort must contain at least 6 characters");
+		Assert.isTrue(password.length() >= 6, "Password must contain at least 6 characters");
 
 		this.password = password;
 	}

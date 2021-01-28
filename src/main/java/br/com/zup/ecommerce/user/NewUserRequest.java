@@ -8,13 +8,13 @@ import javax.validation.constraints.Size;
 
 public class NewUserRequest {
 
-	@NotBlank(message = "{user.login.blank}")
-	@Email(message = "{user.login.emailFormat}")
-	@Unique(field = "login", domainClass = User.class, message = "{user.login.doubled}")
+	@NotBlank
+	@Email
+	@Unique(field = "login", domainClass = User.class)
 	private String login;
 	
-	@NotBlank(message = "{user.password.blank}")
-	@Size(min = 6, message = "{user.password.size}")
+	@NotBlank
+	@Size(min = 6)
 	private String password;
 
 	public String getLogin() {

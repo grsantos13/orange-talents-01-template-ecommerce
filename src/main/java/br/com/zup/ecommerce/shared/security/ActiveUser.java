@@ -14,6 +14,10 @@ public class ActiveUser implements UserDetails {
         this.user = user;
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.user.getProfiles();
@@ -48,4 +52,5 @@ public class ActiveUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

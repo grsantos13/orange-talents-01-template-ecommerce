@@ -29,20 +29,20 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank(message = "{user.login.blank}")
-	@Email(message = "{user.login.emailFormat}")
+	@NotBlank
+	@Email
 	@Column(nullable = false)
 	private String login;
 
-	@NotBlank(message = "{user.password.blank}")
-	@Size(min = 6, message = "{user.password.size}")
+	@NotBlank
+	@Size(min = 6)
 	@Column(nullable = false)
 	private String password;
 
-	@NotNull(message = "{user.creationTime.null}")
-	@PastOrPresent(message = "{user.creationTime.future}")
+	@NotNull
+	@PastOrPresent
 	@Column(nullable = false, updatable = false)
-	private LocalDateTime creationTime;
+	private LocalDateTime createdAt = LocalDateTime.now();
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Profile> profiles = new LinkedHashSet<>();
@@ -57,7 +57,6 @@ public class User {
 		
 		this.login = login;
 		this.password = cleanPassword.hash();
-		this.creationTime = LocalDateTime.now();
 	}
 
 	public String getLogin() {
