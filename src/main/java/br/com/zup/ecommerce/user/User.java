@@ -19,6 +19,7 @@ import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -69,5 +70,18 @@ public class User {
 
 	public Set<Profile> getProfiles() {
 		return profiles;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		User user = (User) o;
+		return login.equals(user.login);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(login);
 	}
 }

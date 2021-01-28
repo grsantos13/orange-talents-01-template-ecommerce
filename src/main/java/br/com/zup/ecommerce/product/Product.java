@@ -3,6 +3,7 @@ package br.com.zup.ecommerce.product;
 import br.com.zup.ecommerce.category.Category;
 import br.com.zup.ecommerce.product.feature.Feature;
 import br.com.zup.ecommerce.product.feature.NewFeatureRequest;
+import br.com.zup.ecommerce.product.image.Image;
 import br.com.zup.ecommerce.user.User;
 
 import javax.persistence.CascadeType;
@@ -73,6 +74,9 @@ public class Product {
     @JoinColumn(nullable = false)
     private User owner;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
+    private Set<Image> images = new HashSet<>();
+
     @Deprecated
     public Product() {
     }
@@ -117,5 +121,21 @@ public class Product {
 
     public Category getCategory() {
         return category;
+    }
+
+    public Set<Image> getImages() {
+        return images;
+    }
+
+    public boolean belongsTo(User user) {
+        return this.owner.equals(user);
+    }
+
+    public void addImages(Set<String> uploadList) {
+        Set<Image> images = uploadList.stream()
+                .map(image -> new Image(this, image))
+                .collect(Collectors.toSet());
+
+        this.images.addAll(images);
     }
 }
