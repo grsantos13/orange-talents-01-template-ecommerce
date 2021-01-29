@@ -28,7 +28,7 @@ public class NewQuestionController {
     private EntityManager manager;
 
     @Autowired
-    private MailSender sender;
+    private Mailer sender;
 
     @PostMapping("/products/{id:\\d+}/questions")
     @Transactional
