@@ -24,7 +24,7 @@ public class ApiErrors {
         return fieldErrors;
     }
 
-    public Integer numberOfErrors(){
+    public int getnumberOfErrors(){
         return globalErrors.size() + fieldErrors.size();
     }
 }

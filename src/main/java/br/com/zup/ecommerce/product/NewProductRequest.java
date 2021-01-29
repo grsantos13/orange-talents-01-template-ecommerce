@@ -78,4 +78,17 @@ public class NewProductRequest {
                            category,
                            owner);
     }
+
+    public Set<String> findSameFeatures() {
+        HashSet<String> sameName = new HashSet<>();
+        HashSet<String> list = new HashSet<>();
+
+        for (NewFeatureRequest feature : this.features) {
+            String name = feature.getName();
+            if (!sameName.add(name))
+                list.add(name);
+        }
+
+        return list;
+    }
 }

@@ -27,6 +27,10 @@ public class Feature {
     @ManyToOne
     private Product product;
 
+    @Deprecated
+    public Feature() {
+    }
+
     public Feature(@NotBlank String name,
                    @NotBlank String description,
                    @NotNull Product product) {

@@ -32,8 +32,20 @@ public class Image {
     @JoinColumn(nullable = false)
     private Product product;
 
-    public Image( @Valid @NotNull Product product, @URL @NotBlank String link) {
+    @Deprecated
+    public Image() {
+    }
+
+    public Image(@Valid @NotNull Product product, @URL @NotBlank String link) {
         this.link = link;
         this.product = product;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public Product getProduct() {
+        return product;
     }
 }

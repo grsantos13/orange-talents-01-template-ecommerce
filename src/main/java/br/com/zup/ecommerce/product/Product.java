@@ -5,6 +5,7 @@ import br.com.zup.ecommerce.product.feature.Feature;
 import br.com.zup.ecommerce.product.feature.NewFeatureRequest;
 import br.com.zup.ecommerce.product.image.Image;
 import br.com.zup.ecommerce.user.User;
+import org.springframework.util.Assert;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -74,7 +75,7 @@ public class Product {
     @JoinColumn(nullable = false)
     private User owner;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
     private Set<Image> images = new HashSet<>();
 
     @Deprecated
@@ -97,6 +98,7 @@ public class Product {
         this.description = description;
         this.category = category;
         this.owner = owner;
+        Assert.isTrue(this.features.size() >= 3, "The products must have three or more features.");
     }
 
     public String getName() {
@@ -135,6 +137,8 @@ public class Product {
         Set<Image> images = uploadList.stream()
                 .map(image -> new Image(this, image))
                 .collect(Collectors.toSet());
+
+        Assert.isTrue(uploadList.size() > 0, "Upload list must have at least 1 string.");
 
         this.images.addAll(images);
     }
