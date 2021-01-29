@@ -4,6 +4,7 @@ import br.com.zup.ecommerce.category.Category;
 import br.com.zup.ecommerce.product.feature.Feature;
 import br.com.zup.ecommerce.product.feature.NewFeatureRequest;
 import br.com.zup.ecommerce.product.image.Image;
+import br.com.zup.ecommerce.product.question.Question;
 import br.com.zup.ecommerce.user.User;
 import org.springframework.util.Assert;
 
@@ -16,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -25,7 +27,10 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 @Entity
@@ -78,6 +83,10 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
     private Set<Image> images = new HashSet<>();
 
+    @OrderBy("title asc")
+    @OneToMany(mappedBy = "product")
+    private SortedSet<Question> questions = new TreeSet<>();
+
     @Deprecated
     public Product() {
     }
@@ -99,6 +108,10 @@ public class Product {
         this.category = category;
         this.owner = owner;
         Assert.isTrue(this.features.size() >= 3, "The products must have three or more features.");
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -125,8 +138,29 @@ public class Product {
         return category;
     }
 
+    public User getOwner() {
+        return owner;
+    }
+
     public Set<Image> getImages() {
         return images;
+    }
+
+    public SortedSet<Question> getQuestions() {
+        return questions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return name.equals(product.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     public boolean belongsTo(User user) {

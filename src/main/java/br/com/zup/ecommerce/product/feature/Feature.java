@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 public class Feature {
@@ -45,5 +46,18 @@ public class Feature {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Feature feature = (Feature) o;
+        return name.equals(feature.name) && product.equals(feature.product);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, product);
     }
 }

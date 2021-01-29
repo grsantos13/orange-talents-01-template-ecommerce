@@ -27,7 +27,7 @@ public class NewImagesController {
     @Autowired
     private Uploader uploader;
 
-    @PostMapping("/{id:\\d+}/images")
+    @PostMapping("/products/{id:\\d+}/images")
     @Transactional
     public ResponseEntity<?> addImages(@PathVariable("id") Long id, @Valid NewImageRequest request, @AuthenticationPrincipal ActiveUser user){
         Product product = manager.find(Product.class, id);

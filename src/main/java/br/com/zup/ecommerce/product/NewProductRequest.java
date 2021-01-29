@@ -43,6 +43,20 @@ public class NewProductRequest {
     @ExistsResource(domainClass = Category.class, field = "id")
     private Long idCategory;
 
+    public NewProductRequest(@NotBlank String name,
+                             @NotNull @Positive BigDecimal value,
+                             @NotNull @Min(0) int availableAmount,
+                             @Valid @NotNull @Size(min = 3) Set<NewFeatureRequest> features,
+                             @NotBlank @Size(max = 1000) String description,
+                             @NotNull Long idCategory) {
+        this.name = name;
+        this.value = value;
+        this.availableAmount = availableAmount;
+        this.features = features;
+        this.description = description;
+        this.idCategory = idCategory;
+    }
+
     public String getName() {
         return name;
     }

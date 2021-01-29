@@ -11,6 +11,11 @@ public class NewFeatureRequest {
     @NotBlank
     private String description;
 
+    public NewFeatureRequest(@NotBlank String name, @NotBlank String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public String getName() {
         return name;
     }
