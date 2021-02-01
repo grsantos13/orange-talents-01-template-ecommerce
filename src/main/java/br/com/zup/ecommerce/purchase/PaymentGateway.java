@@ -17,7 +17,7 @@ public enum PaymentGateway {
     pagseguro{
         @Override
         public String url(UriComponentsBuilder uriBuilder, Purchase purchase) {
-            URI uri = uriBuilder.path("/pagseguro-respnse/{id:\\d+}")
+            URI uri = uriBuilder.path("/pagseguro-response/{id:\\d+}")
                     .buildAndExpand(purchase.getId())
                     .toUri();
             return "pagseguro.com?returnId=" + purchase.getId() + "&redirectUrl=" + uri;
