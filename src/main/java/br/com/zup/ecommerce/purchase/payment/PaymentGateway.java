@@ -1,5 +1,6 @@
-package br.com.zup.ecommerce.purchase;
+package br.com.zup.ecommerce.purchase.payment;
 
+import br.com.zup.ecommerce.purchase.Purchase;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;

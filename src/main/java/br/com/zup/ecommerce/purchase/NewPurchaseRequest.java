@@ -1,6 +1,7 @@
 package br.com.zup.ecommerce.purchase;
 
 import br.com.zup.ecommerce.product.Product;
+import br.com.zup.ecommerce.purchase.payment.PaymentGateway;
 import br.com.zup.ecommerce.shared.validation.annotation.ExistsResource;
 import br.com.zup.ecommerce.user.User;
 

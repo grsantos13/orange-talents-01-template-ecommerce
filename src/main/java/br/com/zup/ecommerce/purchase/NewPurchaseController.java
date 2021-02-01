@@ -42,7 +42,7 @@ public class NewPurchaseController {
         if (isStorageDecreased){
             Purchase purchase = request.toModel(product, user.getUser());
             manager.persist(purchase);
-            mailer.newPurchase(purchase);
+            mailer.send(new NewPurchaseMail(purchase));
             return ResponseEntity.status(302).body(purchase.redirectingUrl(uriComponentsBuilder));
         }
 

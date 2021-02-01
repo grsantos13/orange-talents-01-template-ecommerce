@@ -17,3 +17,6 @@ values(now(), 'Qual é o valor do frete para Campinas?', 1, 1), (now(), 'Qual é
 
 insert into opinion(description, score, title, product_id, user_id)
 values('Produto em perfeito estado e qualidade.', 5, 'Ótimo produto!', 1, 1);
+
+insert into purchase(gateway, quantity, customer_id, product_id)
+values('paypal', 5, 1, 1);

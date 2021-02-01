@@ -60,6 +60,10 @@ public class User {
 		this.password = cleanPassword.hash();
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 	public String getLogin() {
 		return login;
 	}

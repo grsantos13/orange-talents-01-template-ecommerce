@@ -47,7 +47,7 @@ public class NewQuestionController {
                 .buildAndExpand(product.getId(), question.getId())
                 .toUri();
 
-        sender.newQuestion(question, location);
+        sender.send(new QuestionMail(question, location));
 
         Set<QuestionResponse> questionResponses = product.getQuestions().stream()
                 .map(q -> new QuestionResponse(q))
