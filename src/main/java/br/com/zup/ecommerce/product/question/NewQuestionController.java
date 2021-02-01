@@ -1,5 +1,6 @@
 package br.com.zup.ecommerce.product.question;
 
+import br.com.zup.ecommerce.shared.mail.Mailer;
 import br.com.zup.ecommerce.product.Product;
 import br.com.zup.ecommerce.shared.security.ActiveUser;
 import org.springframework.beans.factory.annotation.Autowired;

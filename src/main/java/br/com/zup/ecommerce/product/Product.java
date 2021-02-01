@@ -24,6 +24,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -51,7 +52,7 @@ public class Product {
     private BigDecimal value;
 
     @NotNull
-    @Positive
+    @PositiveOrZero
     @Column(nullable = false)
     private int availableAmount;
 
@@ -107,8 +108,8 @@ public class Product {
         this.value = value;
         this.availableAmount = availableAmount;
         this.features.addAll(features.stream()
-                                     .map(f -> f.toModel(this))
-                                     .collect(Collectors.toSet()));
+                .map(f -> f.toModel(this))
+                .collect(Collectors.toSet()));
         this.description = description;
         this.category = category;
         this.owner = owner;
@@ -192,7 +193,7 @@ public class Product {
                 .collect(Collectors.toSet());
     }
 
-    public <T> Set<T> mapFeatures(Function<Feature, T> mappingFunction){
+    public <T> Set<T> mapFeatures(Function<Feature, T> mappingFunction) {
         return this.features.stream()
                 .map(mappingFunction)
                 .collect(Collectors.toSet());
@@ -201,6 +202,16 @@ public class Product {
     public <T extends Comparable<T>> SortedSet<T> mapQuestions(Function<Question, T> mappingFunction) {
         return this.questions.stream()
                 .map(mappingFunction)
-                .collect(Collectors.toCollection(TreeSet :: new));
+                .collect(Collectors.toCollection(TreeSet::new));
+    }
+
+    public boolean decreaseStorage(@Positive @NotNull int quantity) {
+        Assert.isTrue(quantity > 0, "Quantity must be greater than zero.");
+
+        if (quantity > this.availableAmount)
+            return false;
+
+        this.availableAmount -= quantity;
+        return true;
     }
 }
