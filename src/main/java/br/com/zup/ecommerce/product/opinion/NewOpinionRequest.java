@@ -32,4 +32,16 @@ public class NewOpinionRequest {
                 user
         );
     }
+
+    public int getScore() {
+        return score;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

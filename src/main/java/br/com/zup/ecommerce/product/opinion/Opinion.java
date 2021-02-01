@@ -68,4 +68,16 @@ public class Opinion {
         this.user = user;
         Assert.isTrue(this.score >= 1 && this.score <= 5, "Score must be between 1 and 5");
     }
+
+    public int getScore() {
+        return score;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

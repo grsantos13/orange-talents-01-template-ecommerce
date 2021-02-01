@@ -1,6 +1,6 @@
 package br.com.zup.ecommerce.product.question;
 
-public class QuestionResponse {
+public class QuestionResponse implements Comparable<QuestionResponse> {
 
     private String title;
     private String interestedPerson;
@@ -16,5 +16,10 @@ public class QuestionResponse {
 
     public String getInterestedPerson() {
         return interestedPerson;
+    }
+
+    @Override
+    public int compareTo(QuestionResponse o) {
+        return this.title.compareTo(o.title);
     }
 }

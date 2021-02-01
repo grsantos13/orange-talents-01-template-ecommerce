@@ -17,6 +17,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 public class NewImagesController {
@@ -46,7 +47,9 @@ public class NewImagesController {
 
         manager.merge(product);
 
-        ProductResponse response = new ProductResponse(product);
+        Set<String> response = product.getImages().stream()
+                .map(image -> image.getLink())
+                .collect(Collectors.toSet());
         return ResponseEntity.ok(response);
     }
 }

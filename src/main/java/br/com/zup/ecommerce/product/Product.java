@@ -4,6 +4,7 @@ import br.com.zup.ecommerce.category.Category;
 import br.com.zup.ecommerce.product.feature.Feature;
 import br.com.zup.ecommerce.product.feature.NewFeatureRequest;
 import br.com.zup.ecommerce.product.image.Image;
+import br.com.zup.ecommerce.product.opinion.Opinion;
 import br.com.zup.ecommerce.product.question.Question;
 import br.com.zup.ecommerce.user.User;
 import org.springframework.util.Assert;
@@ -31,6 +32,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Entity
@@ -86,6 +88,9 @@ public class Product {
     @OrderBy("title asc")
     @OneToMany(mappedBy = "product")
     private SortedSet<Question> questions = new TreeSet<>();
+
+    @OneToMany(mappedBy = "product")
+    private Set<Opinion> opinions = new HashSet<>();
 
     @Deprecated
     public Product() {
@@ -150,6 +155,10 @@ public class Product {
         return questions;
     }
 
+    public Opinions getOpinions() {
+        return new Opinions(this.opinions);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -175,5 +184,23 @@ public class Product {
         Assert.isTrue(uploadList.size() > 0, "Upload list must have at least 1 string.");
 
         this.images.addAll(images);
+    }
+
+    public <T> Set<T> mapImages(Function<Image, T> mappingFunction) {
+        return this.images.stream()
+                .map(mappingFunction)
+                .collect(Collectors.toSet());
+    }
+
+    public <T> Set<T> mapFeatures(Function<Feature, T> mappingFunction){
+        return this.features.stream()
+                .map(mappingFunction)
+                .collect(Collectors.toSet());
+    }
+
+    public <T extends Comparable<T>> SortedSet<T> mapQuestions(Function<Question, T> mappingFunction) {
+        return this.questions.stream()
+                .map(mappingFunction)
+                .collect(Collectors.toCollection(TreeSet :: new));
     }
 }
