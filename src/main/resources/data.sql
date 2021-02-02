@@ -19,4 +19,6 @@ insert into opinion(description, score, title, product_id, user_id)
 values('Produto em perfeito estado e qualidade.', 5, 'Ótimo produto!', 1, 1);
 
 insert into purchase(gateway, quantity, customer_id, product_id)
-values('paypal', 5, 1, 1);
+values('paypal', 3, 1, 1);
+
+update product set available_amount = 2 where id = 1;

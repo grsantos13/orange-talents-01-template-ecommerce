@@ -13,6 +13,7 @@ public class ProductDetailsResponse {
     private Set<String> imageLinks;
     private String name;
     private BigDecimal value;
+    private int availableAmount;
     private Set<FeatureResponse> features;
     private String description;
     private double averageScore;
@@ -24,6 +25,7 @@ public class ProductDetailsResponse {
         this.imageLinks = product.mapImages(image -> image.getLink());
         this.name = product.getName();
         this.value = product.getValue();
+        this.availableAmount = product.getAvailableAmount();
         this.features = product.mapFeatures(FeatureResponse::new);
         this.description = product.getDescription();
 
@@ -31,6 +33,7 @@ public class ProductDetailsResponse {
         this.opinions = opinions.mapOpinions(opinion -> {
             return Map.of("title", opinion.getTitle(), "description", opinion.getDescription());
         });
+
         this.averageScore = opinions.opinionsAverage();
         this.totalOpinion = opinions.totalOpinions();
         this.questions = product.mapQuestions(QuestionResponse::new);
@@ -46,6 +49,10 @@ public class ProductDetailsResponse {
 
     public BigDecimal getValue() {
         return value;
+    }
+
+    public int getAvailableAmount() {
+        return availableAmount;
     }
 
     public Set<FeatureResponse> getFeatures() {
