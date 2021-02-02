@@ -21,6 +21,12 @@ public class NewPurchaseRequest {
     @NotNull
     private PaymentGateway gateway;
 
+    public NewPurchaseRequest(@NotNull Long idProduct, @NotNull @Positive int quantity, @NotNull PaymentGateway gateway) {
+        this.idProduct = idProduct;
+        this.quantity = quantity;
+        this.gateway = gateway;
+    }
+
     public Long getIdProduct() {
         return idProduct;
     }

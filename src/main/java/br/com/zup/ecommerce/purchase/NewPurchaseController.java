@@ -24,8 +24,12 @@ public class NewPurchaseController {
     @PersistenceContext
     private EntityManager manager;
 
-    @Autowired
     private Mailer mailer;
+
+    public NewPurchaseController(EntityManager manager, Mailer mailer) {
+        this.manager = manager;
+        this.mailer = mailer;
+    }
 
     @PostMapping("/purchases")
     @Transactional
