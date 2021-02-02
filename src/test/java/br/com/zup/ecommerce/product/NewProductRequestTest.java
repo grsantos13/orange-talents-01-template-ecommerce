@@ -15,7 +15,7 @@ public class NewProductRequestTest {
 
     @ParameterizedTest
     @MethodSource("generator")
-    @DisplayName("It should create a user with every feature")
+    @DisplayName("It should create a product with every feature")
     void test1(int expected, Set<NewFeatureRequest> features){
         NewProductRequest request = new NewProductRequest("name", BigDecimal.TEN, 5, features, "description", 1L);
 
