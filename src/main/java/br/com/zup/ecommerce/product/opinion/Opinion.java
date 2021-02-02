@@ -17,6 +17,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Entity
 public class Opinion {
@@ -79,5 +80,18 @@ public class Opinion {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Opinion opinion = (Opinion) o;
+        return title.equals(opinion.title) && description.equals(opinion.description) && product.equals(opinion.product) && user.equals(opinion.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, description, product, user);
     }
 }

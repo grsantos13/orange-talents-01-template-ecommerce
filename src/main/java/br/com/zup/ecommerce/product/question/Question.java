@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class Question implements Comparable<Question>{
@@ -68,6 +69,19 @@ public class Question implements Comparable<Question>{
 
     public User getInterestedPerson() {
         return interestedPerson;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question = (Question) o;
+        return title.equals(question.title) && product.equals(question.product);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, product);
     }
 
     @Override
