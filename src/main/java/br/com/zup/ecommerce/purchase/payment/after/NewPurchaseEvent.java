@@ -9,8 +9,11 @@ import java.util.Set;
 @Service
 public class NewPurchaseEvent {
 
-    @Autowired
     private Set<SuccessPurchase> successPurchases;
+
+    public NewPurchaseEvent(Set<SuccessPurchase> successPurchases) {
+        this.successPurchases = successPurchases;
+    }
 
     public void process(Purchase purchase){
         if (purchase.successfullyProcessed())

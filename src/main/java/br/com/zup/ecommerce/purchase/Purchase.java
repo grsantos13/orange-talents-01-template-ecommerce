@@ -104,7 +104,7 @@ public class Purchase {
 
         Assert.state(!this.transactions.contains(transaction), "This transaction is already created.");
 
-        Assert.state(successfulTransaction().isEmpty(), "This purchase has already been successfully finished." );
+        Assert.state(!this.successfullyProcessed(), "This purchase has already been successfully finished." );
 
         this.transactions.add(transaction);
 
