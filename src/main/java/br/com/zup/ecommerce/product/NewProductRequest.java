@@ -83,7 +83,7 @@ public class NewProductRequest {
 
     public Product toModel(EntityManager manager, User owner) {
         Category category = manager.find(Category.class, idCategory);
-        Assert.state(category != null, "Category must nt be null");
+        Assert.state(category != null, "Category must not be null");
         return new Product(this.name,
                            this.value,
                            this.availableAmount,

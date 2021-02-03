@@ -13,7 +13,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -30,7 +29,6 @@ public class NewPurchaseControllerTest {
 
     @Test
     @DisplayName("Redirect to gateway when the available amount is decreased")
-    @WithUserDetails(value = "gsantoset@gmail.com")
     void test1() throws Exception{
         Product product = new Product("name", new BigDecimal(50), 5, getFeatureRequests(),
                 "description", getCategory(), new User("gsantoset@gmail.com", new CleanPassword("123456")));
