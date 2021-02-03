@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.EntityManager;
@@ -45,6 +46,40 @@ public class NewPurchaseControllerTest {
         ResponseEntity<?> responseEntity = controller.create(request, new ActiveUser(new User("gsantoset@gmail.com", new CleanPassword("13102013"))), uriComponentsBuilder);
         Assertions.assertEquals(302,responseEntity.getStatusCode().value());
         Assertions.assertEquals("paypal.com/1?redirectUrl=http://localhost:8080/paypal-response/1", responseEntity.getBody());
+
+    }
+
+    @Test
+    @DisplayName("Throws exception for not finding the product")
+    void test2() throws Exception{
+        Mockito.when(manager.find(Product.class, 1L)).thenReturn(null);
+
+        NewPurchaseRequest request = new NewPurchaseRequest(1L, 1, PaymentGateway.paypal);
+
+        Assertions.assertThrows(ResponseStatusException.class,
+                () -> controller.create(request, new ActiveUser(new User("gsantoset@gmail.com", new CleanPassword("13102013"))), uriComponentsBuilder),
+                "Product not found");
+
+    }
+
+    @Test
+    @DisplayName("Throws exception when the available amount isn't enough")
+    void test3() throws Exception{
+        Product product = new Product("name", new BigDecimal(50), 5, getFeatureRequests(),
+                "description", getCategory(), new User("gsantoset@gmail.com", new CleanPassword("123456")));
+        Mockito.when(manager.find(Product.class, 1L)).thenReturn(product);
+
+        Mockito.doAnswer(invocation -> {
+            Purchase purchase = invocation.<Purchase>getArgument(0);
+            ReflectionTestUtils.setField(purchase, "id", 1L);
+            return null;
+        }).when(manager).persist(Mockito.any(Purchase.class));
+
+        NewPurchaseRequest request = new NewPurchaseRequest(1L, 50, PaymentGateway.paypal);
+
+        Assertions.assertThrows(ResponseStatusException.class,
+                () -> controller.create(request, new ActiveUser(new User("gsantoset@gmail.com", new CleanPassword("13102013"))), uriComponentsBuilder),
+                "There isn't enough product available.");
 
     }
 
