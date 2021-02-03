@@ -24,9 +24,12 @@ public class NewImagesController {
 
     @PersistenceContext
     private EntityManager manager;
-
-    @Autowired
     private Uploader uploader;
+
+    public NewImagesController(EntityManager manager, Uploader uploader) {
+        this.manager = manager;
+        this.uploader = uploader;
+    }
 
     @PostMapping("/products/{id:\\d+}/images")
     @Transactional
