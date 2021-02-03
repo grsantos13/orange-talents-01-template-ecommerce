@@ -25,11 +25,15 @@ public class PaymentProcessingController {
     @PersistenceContext
     private EntityManager manager;
 
-    @Autowired
     private Mailer mailer;
 
-    @Autowired
     private NewPurchaseEvent event;
+
+    public PaymentProcessingController(EntityManager manager, Mailer mailer, NewPurchaseEvent event) {
+        this.manager = manager;
+        this.mailer = mailer;
+        this.event = event;
+    }
 
     @PostMapping("/paypal-response/{id:\\d+}")
     @Transactional

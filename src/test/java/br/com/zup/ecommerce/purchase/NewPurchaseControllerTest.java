@@ -11,6 +11,7 @@ import br.com.zup.ecommerce.user.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -47,6 +48,8 @@ public class NewPurchaseControllerTest {
         Assertions.assertEquals(302,responseEntity.getStatusCode().value());
         Assertions.assertEquals("paypal.com/1?redirectUrl=http://localhost:8080/paypal-response/1", responseEntity.getBody());
 
+        ArgumentCaptor<NewPurchaseMail> mailArgumentCaptor = ArgumentCaptor.forClass(NewPurchaseMail.class);
+        Mockito.verify(mailer).send(mailArgumentCaptor.capture());
     }
 
     @Test
@@ -60,26 +63,24 @@ public class NewPurchaseControllerTest {
                 () -> controller.create(request, new ActiveUser(new User("gsantoset@gmail.com", new CleanPassword("13102013"))), uriComponentsBuilder),
                 "Product not found");
 
+        Mockito.verify(mailer, Mockito.never()).send(Mockito.any(NewPurchaseMail.class));
+
     }
 
     @Test
     @DisplayName("Throws exception when the available amount isn't enough")
-    void test3() throws Exception{
+    void test3(){
         Product product = new Product("name", new BigDecimal(50), 5, getFeatureRequests(),
                 "description", getCategory(), new User("gsantoset@gmail.com", new CleanPassword("123456")));
         Mockito.when(manager.find(Product.class, 1L)).thenReturn(product);
-
-        Mockito.doAnswer(invocation -> {
-            Purchase purchase = invocation.<Purchase>getArgument(0);
-            ReflectionTestUtils.setField(purchase, "id", 1L);
-            return null;
-        }).when(manager).persist(Mockito.any(Purchase.class));
 
         NewPurchaseRequest request = new NewPurchaseRequest(1L, 50, PaymentGateway.paypal);
 
         Assertions.assertThrows(ResponseStatusException.class,
                 () -> controller.create(request, new ActiveUser(new User("gsantoset@gmail.com", new CleanPassword("13102013"))), uriComponentsBuilder),
                 "There isn't enough product available.");
+
+        Mockito.verify(mailer, Mockito.never()).send(Mockito.any(NewPurchaseMail.class));
 
     }
 
