@@ -23,6 +23,12 @@ public class NewOpinionRequest {
     @Size(max = 500)
     private String description;
 
+    public NewOpinionRequest(@Min(1) @Max(5) @NotNull int score, @NotBlank String title, @NotBlank @Size(max = 500) String description) {
+        this.score = score;
+        this.title = title;
+        this.description = description;
+    }
+
     public Opinion toModel(Product product, User user) {
         return new Opinion(
                 this.score,
@@ -31,17 +37,5 @@ public class NewOpinionRequest {
                 product,
                 user
         );
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }

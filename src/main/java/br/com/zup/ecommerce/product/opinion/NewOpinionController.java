@@ -22,6 +22,10 @@ public class NewOpinionController {
     @PersistenceContext
     private EntityManager manager;
 
+    public NewOpinionController(EntityManager manager) {
+        this.manager = manager;
+    }
+
     @PostMapping("/products/{id:\\d+}/opinions")
     @Transactional
     public ResponseEntity<?> addOpinion(@PathVariable("id") Long id,
@@ -34,6 +38,6 @@ public class NewOpinionController {
 
         Opinion opinion = request.toModel(product, user.getUser());
         manager.persist(opinion);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(product.getOpinions());
     }
 }

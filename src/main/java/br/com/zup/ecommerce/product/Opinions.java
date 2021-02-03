@@ -32,4 +32,7 @@ public class Opinions {
         return this.opinions.size();
     }
 
+    public Set<Opinion> getOpinions() {
+        return opinions;
+    }
 }
