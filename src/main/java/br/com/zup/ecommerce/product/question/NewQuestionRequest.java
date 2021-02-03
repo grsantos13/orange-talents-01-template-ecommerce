@@ -10,6 +10,14 @@ public class NewQuestionRequest {
     @NotBlank
     private String title;
 
+    @Deprecated
+    public NewQuestionRequest() {
+    }
+
+    public NewQuestionRequest(@NotBlank String title) {
+        this.title = title;
+    }
+
     public String getTitle() {
         return title;
     }

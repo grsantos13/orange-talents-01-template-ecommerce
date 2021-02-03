@@ -28,8 +28,12 @@ public class NewQuestionController {
     @PersistenceContext
     private EntityManager manager;
 
-    @Autowired
     private Mailer sender;
+
+    public NewQuestionController(EntityManager manager, Mailer sender) {
+        this.manager = manager;
+        this.sender = sender;
+    }
 
     @PostMapping("/products/{id:\\d+}/questions")
     @Transactional

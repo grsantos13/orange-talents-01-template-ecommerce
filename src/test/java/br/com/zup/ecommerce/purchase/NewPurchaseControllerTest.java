@@ -22,6 +22,8 @@ import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class NewPurchaseControllerTest {
 
     private EntityManager manager = Mockito.mock(EntityManager.class);
@@ -45,11 +47,12 @@ public class NewPurchaseControllerTest {
         NewPurchaseRequest request = new NewPurchaseRequest(1L, 1, PaymentGateway.paypal);
 
         ResponseEntity<?> responseEntity = controller.create(request, new ActiveUser(new User("gsantoset@gmail.com", new CleanPassword("13102013"))), uriComponentsBuilder);
-        Assertions.assertEquals(302,responseEntity.getStatusCode().value());
-        Assertions.assertEquals("paypal.com/1?redirectUrl=http://localhost:8080/paypal-response/1", responseEntity.getBody());
+        assertEquals(302,responseEntity.getStatusCode().value());
+        assertEquals("paypal.com/1?redirectUrl=http://localhost:8080/paypal-response/1", responseEntity.getBody());
 
         ArgumentCaptor<NewPurchaseMail> mailArgumentCaptor = ArgumentCaptor.forClass(NewPurchaseMail.class);
         Mockito.verify(mailer).send(mailArgumentCaptor.capture());
+        assertEquals("gsantoset@gmail.com", mailArgumentCaptor.getValue().to());
     }
 
     @Test
