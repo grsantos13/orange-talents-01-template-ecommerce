@@ -17,6 +17,15 @@ public class NewUserRequest {
 	@Size(min = 6)
 	private String password;
 
+	@Deprecated
+	public NewUserRequest() {
+	}
+
+	public NewUserRequest(@NotBlank @Email String login, @NotBlank @Size(min = 6) String password) {
+		this.login = login;
+		this.password = password;
+	}
+
 	public String getLogin() {
 		return login;
 	}
