@@ -8,30 +8,27 @@ import javax.persistence.EntityManager;
 import javax.validation.constraints.NotBlank;
 
 public class NewCategoryRequest {
-	
-	@NotBlank
-	@Unique(field = "name", domainClass = Category.class)
-	private String name;
 
-	@ExistsResource(field = "id", domainClass = Category.class)
-	private Long idMotherCategory;
+    @NotBlank
+    @Unique(field = "name", domainClass = Category.class)
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    @ExistsResource(field = "id", domainClass = Category.class)
+    private Long idMotherCategory;
 
-	public Long getIdMotherCategory() {
-		return idMotherCategory;
-	}
+    public NewCategoryRequest(@NotBlank String name, Long idMotherCategory) {
+        this.name = name;
+        this.idMotherCategory = idMotherCategory;
+    }
 
-	public Category toModel(EntityManager manager) {
-    	Category category = null;
+    public Category toModel(EntityManager manager) {
+        Category category = null;
 
-    	if (idMotherCategory != null) {
-			category = manager.find(Category.class, idMotherCategory);
-			Assert.notNull(category, "Category must not be null");
-		}
+        if (idMotherCategory != null) {
+            category = manager.find(Category.class, idMotherCategory);
+            Assert.notNull(category, "Category must not be null");
+        }
 
-    	return new Category(name, category);
+        return new Category(name, category);
     }
 }
