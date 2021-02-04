@@ -36,6 +36,9 @@ public class NewOpinionController {
         if (product == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
 
+        if (product.getOwner().equals(user.getUser()))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The owner cannot evaluate their own product");
+
         Opinion opinion = request.toModel(product, user.getUser());
         manager.persist(opinion);
         return ResponseEntity.ok(product.getOpinions());
