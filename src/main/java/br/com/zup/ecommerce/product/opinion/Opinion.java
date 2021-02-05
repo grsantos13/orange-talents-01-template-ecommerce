@@ -83,14 +83,6 @@ public class Opinion {
         return description;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
