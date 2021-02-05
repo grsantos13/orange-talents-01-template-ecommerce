@@ -67,6 +67,7 @@ public class Opinion {
         this.description = description;
         this.product = product;
         this.user = user;
+        Assert.isTrue(!product.belongsTo(user), "Product owner cannot be the one who posts an opinion");
         Assert.isTrue(this.score >= 1 && this.score <= 5, "Score must be between 1 and 5");
     }
 
@@ -80,6 +81,14 @@ public class Opinion {
 
     public String getDescription() {
         return description;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     @Override

@@ -2,6 +2,7 @@ package br.com.zup.ecommerce.product.opinion;
 
 import br.com.zup.ecommerce.product.Product;
 import br.com.zup.ecommerce.user.User;
+import org.springframework.util.Assert;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -30,6 +31,7 @@ public class NewOpinionRequest {
     }
 
     public Opinion toModel(Product product, User user) {
+        Assert.isTrue(!product.belongsTo(user), "Product owner cannot be the one who posts an opinion");
         return new Opinion(
                 this.score,
                 this.title,
